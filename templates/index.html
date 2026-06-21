@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Emotion Detector</title>
+</head>
+<body>
+    <h1>Emotion Detector</h1>
+    <form onsubmit="return false;">
+        <label for="textToAnalyze">Enter text to analyze:</label><br><br>
+        <input type="text" id="textToAnalyze" name="textToAnalyze" size="60"><br><br>
+        <button type="button" onclick="RunSentimentAnalysis()">Analyze</button>
+    </form>
+    <div id="system_response"></div>
+
+    <script>
+        function RunSentimentAnalysis() {
+            const text = document.getElementById("textToAnalyze").value;
+            const xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("system_response").innerHTML =
+                        "<b>" + this.responseText + "</b>";
+                }
+            };
+            xhttp.open("GET", "emotionDetector?textToAnalyze=" + encodeURIComponent(text), true);
+            xhttp.send();
+        }
+    </script>
+</body>
+</html>
